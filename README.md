@@ -14,7 +14,7 @@ This library can be installed through composer. Just add the following to your `
 ```json
 {
 	"require": {
-		"endyjasmi/cuid": "dev-master"
+		"endyjasmi/cuid": "1.*"
 	}
 }
 ```
