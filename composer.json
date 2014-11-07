@@ -1,11 +1,33 @@
 {
+    "name": "endyjasmi/cuid",
+    "description": "Cuid php port",
+    "keywords": ["cuid", "uuid", "guid", "uid", "id"],
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Endy Jasmi",
+            "email": "endyjasmi@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "endyjasmi@gmail.com",
+        "issues": "https://github.com/endyjasmi/cuid/issues",
+        "source": "https://github.com/endyjasmi/cuid"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
 	"autoload": {
         "psr-4": {
             "EndyJasmi\\": "src/"
-        }
+        },
+        "files": [
+            "vendor/illuminate/support/helpers.php"
+        ]
 	},
     "require": {
-
+        "illuminate/support": "5.*"
     },
     "require-dev": {
     	"squizlabs/php_codesniffer": "1.*",
