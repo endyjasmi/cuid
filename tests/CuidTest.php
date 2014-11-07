@@ -1,6 +1,5 @@
 <?php namespace EndyJasmi;
 
-use Mockery;
 use PHPUnit_Framework_TestCase as TestCase;
 
 class CuidTest extends TestCase
