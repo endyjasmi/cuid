@@ -75,4 +75,6 @@ SOFTWARE.
 ```
 
 #Feedback
-Want to say hello to me? You can reach me at [endyjasmi@gmail.com](mailto:endyjasmi@gmail.com) or [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/endyjasmi/cuid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Want to say hello to me? You can reach me at [endyjasmi@gmail.com](mailto:endyjasmi@gmail.com) or
+
+[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/endyjasmi/cuid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
