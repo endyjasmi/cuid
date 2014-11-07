@@ -230,6 +230,8 @@ class Cuid
     /**
      * Cuid constructor
      *
+     * __Make sure that the library have write access to the path supplied__
+     *
      * @param string $path Folder path to persist file
      */
     public function __construct($path)
