@@ -16,11 +16,3 @@ script:
 
 after_script:
   - php vendor/bin/coveralls -v
-
-notifications:
-  webhooks:
-    urls:
-      - https://webhooks.gitter.im/e/a7a6c2d1e306e57901c4
-    on_success: always  # options: [always|never|change] default: always
-    on_failure: always  # options: [always|never|change] default: always
-    on_start: false     # default: false
