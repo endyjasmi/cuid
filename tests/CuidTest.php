@@ -72,10 +72,6 @@ class CuidTest extends TestCase
 
     public function testCuidUniqueness()
     {
-        date_default_timezone_set('Asia/Kuala_Lumpur');
-
-        var_dump(date('d/m/Y h:i:s a', time()));
-
         $ids = [];
 
         for ($i = 1; $i <= static::MAX_ITERATION; $i++) {
@@ -85,7 +81,5 @@ class CuidTest extends TestCase
 
             $ids[$hash] = $i;
         }
-
-        var_dump(date('d/m/Y h:i:s a', time()));
     }
 }
