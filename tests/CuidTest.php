@@ -72,7 +72,7 @@ class CuidTest extends TestCase
 
     public function atestCuidUniqueness()
     {
-        date_default_timezone_set('Asia\Kuala_Lumpur');
+        date_default_timezone_set('Asia/Kuala_Lumpur');
 
         var_dump(date('d/m/Y h:i:s a', time()));
 
