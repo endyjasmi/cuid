@@ -70,7 +70,7 @@ class CuidTest extends TestCase
         $this->assertRegExp('/[0-9a-z]{8}/', $hash);
     }
 
-    public function atestCuidUniqueness()
+    public function testCuidUniqueness()
     {
         date_default_timezone_set('Asia/Kuala_Lumpur');
 
