@@ -56,32 +56,11 @@ class Cuid
      */
     protected static function count($path, $blockSize = Cuid::NORMAL_BLOCK)
     {
-        // Specify the file
-        $filePath = $path . DIRECTORY_SEPARATOR . '.count';
+        static $count = 0;
 
-        // Open the file
-        $handler = fopen($filePath, 'a+');
-        if (! $handler) {
-            throw new RuntimeException("Failed to create file: $filePath");
-        }
-
-        // Lock file and reset file pointer
-        flock($handler, LOCK_EX);
-        fseek($handler, 0);
-
-        // Get count from file and increase it
-        $count = intval(trim(fgets($handler))) + 1;
-
-        // Update the file and close it
-        fseek($handler, 0);
-        ftruncate($handler, 0);
-        fwrite($handler, $count);
-        fclose($handler);
-
-        // Return count in hash
         return Cuid::pad(
             base_convert(
-                $count,
+                ++$count,
                 Cuid::DECIMAL,
                 Cuid::BASE36
             ),
