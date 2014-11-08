@@ -4,7 +4,7 @@ use PHPUnit_Framework_TestCase as TestCase;
 
 class CuidTest extends TestCase
 {
-    const MAX_ITERATION = 100000;
+    const MAX_ITERATION = 50000;
 
     public function testInvokeMagicMethod()
     {
@@ -76,6 +76,19 @@ class CuidTest extends TestCase
 
         for ($i = 1; $i <= static::MAX_ITERATION; $i++) {
             $hash = Cuid::make();
+
+            $this->assertFalse(isset($ids[$hash]));
+
+            $ids[$hash] = $i;
+        }
+    }
+
+    public function testSlugUniqueness()
+    {
+        $ids = [];
+
+        for ($i = 1; $i <= static::MAX_ITERATION; $i++) {
+            $hash = Cuid::slug();
 
             $this->assertFalse(isset($ids[$hash]));
 
