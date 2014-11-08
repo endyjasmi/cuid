@@ -4,7 +4,7 @@ use PHPUnit_Framework_TestCase as TestCase;
 
 class CuidTest extends TestCase
 {
-    const MAX_ITERATION = 1200000;
+    const MAX_ITERATION = 100000;
 
     public function testInvokeMagicMethod()
     {
