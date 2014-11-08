@@ -34,27 +34,13 @@ class Cuid
     const SMALL_BLOCK = 2;
 
     /**
-     * @var string Temporary folder path to persist data
-     */
-    protected $path;
-
-    /**
      * Counter used to prevent same machine collision
      *
-     * In the original project, counter are stored in memory
-     * because nodejs handle request in a single process.
-     * PHP process is created for every single request hence
-     * counts cannot be stored in memory. For this, I opt to
-     * store counts in a locked file
-     *
-     * Make sure the library have write access
-     *
-     * @param string $path Storage path
      * @param integer $blockSize Block size
      *
      * @return string Return count generated hash
      */
-    protected static function count($path, $blockSize = Cuid::NORMAL_BLOCK)
+    protected static function count($blockSize = Cuid::NORMAL_BLOCK)
     {
         static $count = 0;
 
@@ -69,55 +55,18 @@ class Cuid
     }
 
     /**
-     * Fingerprint are used for server identification
-     *
-     * PHP process are created for every request hence
-     * there is no fix process id. In order to solve this
-     * problem, the first process id are stored in a locked
-     * file. The process id will be reuse in the subsequent
-     * request until the pid file is deleted
-     *
-     * Make sure the library have write access
-     *
-     * @param string $path Storage path
+     * Fingerprint are used for process identification
+     * 
      * @param integer $blockSize Block size
      *
      * @return string Return fingerprint generated hash
      */
-    protected static function fingerprint($path, $blockSize = Cuid::NORMAL_BLOCK)
+    protected static function fingerprint($blockSize = Cuid::NORMAL_BLOCK)
     {
-        // Specify the file
-        $filePath = $path . DIRECTORY_SEPARATOR . '.pid';
-
-        // Open the file
-        $handler = fopen($filePath, 'a+');
-        if (! $handler) {
-            throw new RuntimeException("Failed to create file: $filePath");
-        }
-
-        // Lock file and reset file pointer
-        flock($handler, LOCK_EX);
-        fseek($handler, 0);
-
-        // Get process id from file
-        $pid = intval(trim(fgets($handler)));
-
-        // If no process id, new one are generated and stored
-        if (! $pid) {
-            $pid = getmypid();
-
-            fseek($handler, 0);
-            ftruncate($handler, 0);
-            fwrite($handler, $pid);
-        }
-
-        // Close file
-        fclose($handler);
-
         // Generate process id based hash
         $pid = Cuid::pad(
             base_convert(
-                $pid,
+                getmypid(),
                 Cuid::DECIMAL,
                 Cuid::BASE36
             ),
@@ -173,7 +122,7 @@ class Cuid
      *
      * @return string Return random hash string
      */
-    protected static function random()
+    protected static function random($blockSize = Cuid::NORMAL_BLOCK)
     {
         // Get random integer
         $modifier = pow(Cuid::BASE36, Cuid::NORMAL_BLOCK);
@@ -181,8 +130,8 @@ class Cuid
 
         $random = $random * $modifier;
 
-        // Convert integer to hash and return
-        return Cuid::pad(
+        // Convert integer to hash
+        $hash = Cuid::pad(
             base_convert(
                 $random,
                 Cuid::DECIMAL,
@@ -190,6 +139,13 @@ class Cuid
             ),
             Cuid::NORMAL_BLOCK
         );
+
+        // Limit hash if small block required
+        if ($blockSize == Cuid::SMALL_BLOCK) {
+            $hash = substr($hash, -2);
+        }
+
+        return $hash;
     }
 
     /**
@@ -197,25 +153,21 @@ class Cuid
      *
      * @return string Return timestamp based hash string
      */
-    protected static function timestamp()
+    protected static function timestamp($blockSize = Cuid::NORMAL_BLOCK)
     {
-        return base_convert(
+        // Convert current time up to micro second to hash
+        $hash = base_convert(
             floor(microtime(true) * 1000),
             Cuid::DECIMAL,
             Cuid::BASE36
         );
-    }
 
-    /**
-     * Cuid constructor
-     *
-     * __Make sure that the library have write access to the path supplied__
-     *
-     * @param string $path Folder path to persist file
-     */
-    public function __construct($path)
-    {
-        $this->path = $path;
+        // Limit hash if small block required
+        if ($blockSize == Cuid::SMALL_BLOCK) {
+            $hash = substr($hash, -2);
+        }
+
+        return $hash;
     }
 
     /**
@@ -233,12 +185,12 @@ class Cuid
      *
      * @return string Return generated cuid string
      */
-    public function cuid()
+    public static function cuid()
     {
         $prefix = 'c';
         $timestamp = Cuid::timestamp();
-        $count = Cuid::count($this->path);
-        $fingerprint = Cuid::fingerprint($this->path);
+        $count = Cuid::count();
+        $fingerprint = Cuid::fingerprint();
         $random = Cuid::random() . Cuid::random();
 
         return $prefix .
@@ -249,22 +201,32 @@ class Cuid
     }
 
     /**
+     * An alias to cuid method
+     *
+     * @return string Return generate cuird string
+     */
+    public static function make()
+    {
+        return Cuid::cuid();
+    }
+
+    /**
      * Generate short version cuid
      *
      * It only have 8 characters and it is a great solution
      * for short urls.
      *
-     * Note that less room for the data also means higher
+     * Note: Less room for the data also means higher
      * chance of collision
      *
      * @return string Return generated short cuid string
      */
-    public function slug()
+    public static function slug()
     {
-        $timestamp = substr(Cuid::timestamp(), -2);
-        $count = Cuid::count($this->path, Cuid::SMALL_BLOCK);
-        $fingerprint = Cuid::fingerprint($this->path, Cuid::SMALL_BLOCK);
-        $random = substr(Cuid::random(), -2);
+        $timestamp = Cuid::timestamp(Cuid::SMALL_BLOCK);
+        $count = Cuid::count(Cuid::SMALL_BLOCK);
+        $fingerprint = Cuid::fingerprint(Cuid::SMALL_BLOCK);
+        $random = Cuid::random(Cuid::SMALL_BLOCK);
 
         return $timestamp .
             $count .
