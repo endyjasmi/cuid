@@ -25,26 +25,22 @@ Here's how to use it
 // Include composer autoloader
 require 'vendor/autoload.php';
 
-// Assign a temporary folder to store library state
-// Do make sure that the library have write access to
-// the folder
-$directory = __DIR__ . DIRECTORY_SEPARATOR . 'storage';
-
 // Create a cuid instance
-$cuid = new EndyJasmi\Cuid($directory);
+$cuid = new EndyJasmi\Cuid;
 
 // Generate normal cuid
 $normalCuid = $cuid->cuid(); // ci27flk5w0002adx5dhyvzye2
 
 // Generate short cuid
 $shortCuid = $cuid->slug(); // 6503a5k0
+
+// You can also generate cuid using static method
+$normalCuid = Cuid::cuid();
+$shortCuid = Cuid::slug();
+
+// There is also an alias method for better readability
+$normalCuid = Cuid::make();
 ```
-
-The library will store 2 state file inside the temporary folder.
-
-`.count` is the first state which store the counter information. In the original project, counter are stored in memory. This works because node.js only run in a single process to serve multiple client. PHP on the other hand create a new process for each request. This means that PHP cannot store state across multiple request. In order to deal with this, a temporary file is used to store state across processes. The file will be locked for each read.
-
-`.pid` is the second state to be stored in the temporary storage. As discussed above, PHP does not have a consistent process id because it will create a new process for each request. In order to deal with this, the first time the library is used, the process id are stored and will be used for subsequent cuid generation until the state file is deleted.
 
 ##License
 This library is licensed under MIT as shown below. Exact copy of the license can be found in `LICENSE` file.
