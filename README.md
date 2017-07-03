@@ -1,14 +1,14 @@
-#Cuid for PHP [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/endyjasmi/cuid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# Cuid for PHP [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/endyjasmi/cuid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://travis-ci.org/endyjasmi/cuid.svg?branch=master)](https://travis-ci.org/endyjasmi/cuid) [![Coverage Status](https://coveralls.io/repos/endyjasmi/cuid/badge.png?branch=master)](https://coveralls.io/r/endyjasmi/cuid?branch=master) [![SensioLabsInsight](https://insight.sensiolabs.com/projects/49dcc316-3f00-4573-a1c1-91dedffa1829/mini.png)](https://insight.sensiolabs.com/projects/49dcc316-3f00-4573-a1c1-91dedffa1829) [![Latest Stable Version](https://poser.pugx.org/endyjasmi/cuid/v/stable.svg)](https://packagist.org/packages/endyjasmi/cuid) [![Total Downloads](https://poser.pugx.org/endyjasmi/cuid/downloads.svg)](https://packagist.org/packages/endyjasmi/cuid) [![License](https://poser.pugx.org/endyjasmi/cuid/license.svg)](https://packagist.org/packages/endyjasmi/cuid)
 
 This library provides a collision resistant id (hashes) for horizontal scaling and sequential lookup performance. This README will only cover basic detail and PHP specific implementation.
 
 __Do [refer to the original project](http://usecuid.org/) for the full description of the project.__
 
-##Requirement
+## Requirement
 1. PHP 5.4 and above
 
-##Installation
+## Installation
 This library can be installed through composer. Just add the following to your `composer.json` and run `composer install`.
 
 ```json
@@ -19,7 +19,7 @@ This library can be installed through composer. Just add the following to your `
 }
 ```
 
-##Quickstart
+## Quickstart
 Here's how to use it
 ```php
 // Include composer autoloader
@@ -42,7 +42,7 @@ $shortCuid = Cuid::slug();
 $normalCuid = Cuid::make();
 ```
 
-##License
+## License
 This library is licensed under MIT as shown below. Exact copy of the license can be found in `LICENSE` file.
 
 ```
@@ -70,7 +70,7 @@ SOFTWARE.
 
 ```
 
-#Feedback
+# Feedback
 Want to say hello to me? You can reach me at [endyjasmi@gmail.com](mailto:endyjasmi@gmail.com) or
 
 [![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/endyjasmi/cuid?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
