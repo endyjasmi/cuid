@@ -239,12 +239,12 @@ class Cuid
 	 * @return boolean
 	 */
 
-    public static function isCuid($cuid)
-    {
-        if (gettype($cuid) !== 'string') {
-            return false;
-        }
+	public static function isCuid($cuid)
+	{
+		if (gettype($cuid) !== 'string') {
+			return false;
+		}
 
 		return $cuid[0] === 'c';
-    }
+	}
 }
