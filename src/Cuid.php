@@ -201,7 +201,7 @@ class Cuid
     /**
      * An alias to cuid method
      *
-     * @return string Return generate cuird string
+     * @return string Return generate cuid string
      */
     public static function make()
     {
@@ -230,5 +230,21 @@ class Cuid
             $count .
             $fingerprint .
             $random;
+    }
+
+	/**
+	 * Check if string is a valid 'cuid'.
+	 *
+	 * @param cuid: string to check if it is a 'cuid'.
+	 * @return boolean
+	 */
+
+    public static function isCuid($cuid)
+    {
+        if (gettype($cuid) !== 'string') {
+            return false;
+        }
+
+		return $cuid[0] === 'c';
     }
 }
