@@ -131,7 +131,7 @@ class Cuid
         // Convert integer to hash
         $hash = Cuid::pad(
             base_convert(
-                $random,
+                floor($random),
                 Cuid::DECIMAL,
                 Cuid::BASE36
             ),
