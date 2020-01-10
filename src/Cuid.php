@@ -123,10 +123,8 @@ class Cuid
     protected static function random($blockSize = Cuid::NORMAL_BLOCK)
     {
         // Get random integer
-        $modifier = pow(Cuid::BASE36, Cuid::NORMAL_BLOCK);
-        $random = mt_rand() / mt_getrandmax();
-
-        $random = $random * $modifier;
+        $max = pow(Cuid::BASE36, Cuid::NORMAL_BLOCK);
+        $random = random_int(0, $max);
 
         // Convert integer to hash
         $hash = Cuid::pad(
